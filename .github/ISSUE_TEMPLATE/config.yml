@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: mailto:security@heir.es
+    about: Vulnerabilities. Do not open a public issue.
+  - name: Contributor License Agreement
+    url: https://github.com/heirlabs/famcash-contracts/blob/main/CLA.md
+    about: Required before we can merge a contribution.

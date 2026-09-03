@@ -1,0 +1,44 @@
+{
+  "name": "@heirlabs/famcash-contracts",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Family.Cash office smart contracts — estate plates, dead-man accounts, and family share books.",
+  "license": "MIT",
+  "author": "HEIR Labs Pte. Ltd.",
+  "homepage": "https://github.com/heirlabs/famcash-contracts",
+  "bugs": {
+    "url": "https://github.com/heirlabs/famcash-contracts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/heirlabs/famcash-contracts.git"
+  },
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "node": "hardhat node",
+    "lab": "hardhat run scripts/lab.js --network localhost",
+    "lab:open": "hardhat run scripts/lab-open-gas.js --network localhost",
+    "lab:gas": "hardhat run scripts/lab-verify-gas.js --network localhost",
+    "lab:house": "hardhat run scripts/lab-house.js --network localhost",
+    "lab:books": "hardhat run scripts/lab-books-dryrun.js --network localhost",
+    "deploy": "hardhat run scripts/deploy.js",
+    "clean": "hardhat clean"
+  },
+  "keywords": [
+    "family-cash",
+    "heir",
+    "solidity",
+    "inheritance",
+    "robinhood-chain",
+    "erc6551"
+  ],
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
+    "@openzeppelin/contracts": "5.4.0",
+    "hardhat": "^2.19.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

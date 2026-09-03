@@ -1,0 +1,11 @@
+node_modules
+cache
+artifacts
+office-local.json
+.env
+.env.*
+!.env.example
+.DS_Store
+coverage
+coverage.json
+typechain-types

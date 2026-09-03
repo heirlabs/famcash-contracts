@@ -1,0 +1,22 @@
+name: Bug
+description: A defect in the contracts or lab scripts
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Contract, function, and observed behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Hardhat test or script if you have one.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Security issues go to security@heir.es, not here.
