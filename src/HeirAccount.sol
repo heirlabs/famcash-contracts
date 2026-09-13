@@ -12,6 +12,7 @@ import {IERC6551Account} from "./interfaces/IERC6551Account.sol";
 import {IERC6551Executable} from "./interfaces/IERC6551Executable.sol";
 import {IHeirAccount} from "./interfaces/IHeirAccount.sol";
 import {ISoulbindable} from "./interfaces/ISoulbindable.sol";
+import {ArcCash} from "./ArcCash.sol";
 
 /// @title HeirAccount
 /// @notice 6551-shaped account with check-in, execute-while-alive, and claim that
@@ -227,7 +228,7 @@ contract HeirAccount is IERC6551Account, IERC6551Executable, IHeirAccount, IERC1
         if (_claimed[msg.sender]) revert AlreadyClaimed();
 
         if (!_claimBaseCaptured) {
-            _ethClaimBase = address(this).balance;
+            _ethClaimBase = _nativeIsCash() ? 0 : address(this).balance;
             uint256 t = _allowedTokens.length;
             for (uint256 i; i < t;) {
                 address token_ = _allowedTokens[i];
@@ -278,7 +279,7 @@ contract HeirAccount is IERC6551Account, IERC6551Executable, IHeirAccount, IERC1
         if (!_claimBaseCaptured || _claimedCount != _beneficiaries.length) revert StillOpen();
         address to = lastClaimant;
         if (to == address(0)) revert NotBeneficiary();
-        uint256 ethBal = address(this).balance;
+        uint256 ethBal = _nativeIsCash() ? 0 : address(this).balance;
         if (ethBal > 0) {
             (bool ok,) = to.call{value: ethBal}("");
             if (!ok) revert CallFailed();
@@ -332,6 +333,10 @@ contract HeirAccount is IERC6551Account, IERC6551Executable, IHeirAccount, IERC1
             }
         }
         return 0;
+    }
+
+    function _nativeIsCash() internal view returns (bool) {
+        return ArcCash.nativeIsCashList(block.chainid, _allowedTokens);
     }
 
     function _isOwner(address signer) internal view returns (bool) {
