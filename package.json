@@ -23,6 +23,8 @@
     "lab:house": "hardhat run scripts/lab-house.js --network localhost",
     "lab:books": "hardhat run scripts/lab-books-dryrun.js --network localhost",
     "deploy": "hardhat run scripts/deploy.js",
+    "deploy:published": "hardhat run scripts/deploy-published.js",
+    "walk:published": "hardhat run scripts/walk-published.js",
     "clean": "hardhat clean"
   },
   "keywords": [
