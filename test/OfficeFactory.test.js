@@ -103,6 +103,40 @@ describe("OfficeFactory", function () {
     expect(await account.allowedTokenAt(1)).to.equal(await stock.getAddress());
   });
 
+  it("opens with explicit cash and does not prepend the factory cash token", async function () {
+    const [owner, heir1, heir2] = await ethers.getSigners();
+    const Cash = await ethers.getContractFactory("MockCashToken");
+    const factoryCash = await Cash.deploy();
+    await factoryCash.waitForDeployment();
+    const vaultCash = await Cash.deploy();
+    await vaultCash.waitForDeployment();
+    const Factory = await ethers.getContractFactory("OfficeFactory");
+    const factory = await Factory.deploy(ethers.ZeroAddress, await factoryCash.getAddress());
+    await factory.waitForDeployment();
+    const tx = await factory.connect(owner).openOfficeWithCash(
+      officeRules(),
+      await beneficiaries(heir1, heir2),
+      await vaultCash.getAddress(),
+      []
+    );
+    const opened = (await tx.wait()).logs
+      .map((l) => {
+        try {
+          return factory.interface.parseLog(l);
+        } catch {
+          return null;
+        }
+      })
+      .find((p) => p && p.name === "OfficeOpened").args;
+    const account = await ethers.getContractAt("HeirAccount", opened.account);
+    expect(await account.allowedTokenCount()).to.equal(1n);
+    expect(await account.allowedTokenAt(0)).to.equal(await vaultCash.getAddress());
+    await expect(factory.connect(owner).openOfficeWithCash(officeRules(), await beneficiaries(heir1, heir2), ethers.ZeroAddress, [])).to.be.revertedWithCustomError(
+      factory,
+      "InvalidCash"
+    );
+  });
+
   it("locks the shared implementation and pauses opens", async function () {
     const [owner, heir1, heir2, stranger] = await ethers.getSigners();
     const Factory = await ethers.getContractFactory("OfficeFactory");

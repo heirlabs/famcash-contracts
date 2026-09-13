@@ -24,6 +24,8 @@ contract OfficeFactory is AccessControlDefaultAdminRules, Pausable {
 
     event OfficeOpened(uint256 indexed tokenId, address indexed account, address indexed owner);
 
+    error InvalidCash();
+
     constructor(address registry_, address cashToken_)
         AccessControlDefaultAdminRules(OfficeRoles.ADMIN_DELAY, msg.sender)
     {
@@ -47,7 +49,7 @@ contract OfficeFactory is AccessControlDefaultAdminRules, Pausable {
         whenNotPaused
         returns (uint256 tokenId, address account)
     {
-        return _openOffice(rules, beneficiaries, new address[](0));
+        return _openOffice(rules, beneficiaries, _allowed(new address[](0)));
     }
 
     function openOfficeWithTokens(
@@ -55,13 +57,25 @@ contract OfficeFactory is AccessControlDefaultAdminRules, Pausable {
         IHeirAccount.Beneficiary[] calldata beneficiaries,
         address[] calldata extraTokens
     ) external whenNotPaused returns (uint256 tokenId, address account) {
-        return _openOffice(rules, beneficiaries, extraTokens);
+        return _openOffice(rules, beneficiaries, _allowedAround(cashToken, extraTokens));
+    }
+
+    /// @notice Open with an explicit vault cash token. Does not prepend `cashToken`.
+    ///         Use this on Arc when the pot is EURC so USDC gas is not also allowlisted.
+    function openOfficeWithCash(
+        IHeirAccount.Rules calldata rules,
+        IHeirAccount.Beneficiary[] calldata beneficiaries,
+        address cash,
+        address[] calldata extraTokens
+    ) external whenNotPaused returns (uint256 tokenId, address account) {
+        if (cash == address(0)) revert InvalidCash();
+        return _openOffice(rules, beneficiaries, _allowedAround(cash, extraTokens));
     }
 
     function _openOffice(
         IHeirAccount.Rules calldata rules,
         IHeirAccount.Beneficiary[] calldata beneficiaries,
-        address[] memory extraTokens
+        address[] memory allowed
     ) internal returns (uint256 tokenId, address account) {
         tokenId = certificate.mint(msg.sender);
         account = _createAccount(tokenId);
@@ -71,27 +85,31 @@ contract OfficeFactory is AccessControlDefaultAdminRules, Pausable {
             tokenId,
             rules,
             beneficiaries,
-            _allowed(extraTokens)
+            allowed
         );
         emit OfficeOpened(tokenId, account, msg.sender);
     }
 
     function _allowed(address[] memory extraTokens) internal view returns (address[] memory allowed) {
+        return _allowedAround(cashToken, extraTokens);
+    }
+
+    function _allowedAround(address cash, address[] memory extraTokens) internal pure returns (address[] memory allowed) {
         if (extraTokens.length == 0) {
-            if (cashToken == address(0)) return new address[](0);
+            if (cash == address(0)) return new address[](0);
             allowed = new address[](1);
-            allowed[0] = cashToken;
+            allowed[0] = cash;
             return allowed;
         }
         address[] memory scratch = new address[](extraTokens.length + 1);
         uint256 w;
-        if (cashToken != address(0)) {
-            scratch[0] = cashToken;
+        if (cash != address(0)) {
+            scratch[0] = cash;
             w = 1;
         }
         for (uint256 i; i < extraTokens.length;) {
             address token = extraTokens[i];
-            if (token == address(0) || token == cashToken) {
+            if (token == address(0) || token == cash) {
                 unchecked {
                     ++i;
                 }

@@ -1,5 +1,11 @@
 require("@nomicfoundation/hardhat-toolbox");
 
+function deployerAccounts() {
+  const raw = (process.env.PRIVATE_KEY || process.env.HEIR_ETH_CCT_DEPLOYER || "").trim();
+  if (!raw) return [];
+  return [raw.startsWith("0x") ? raw : `0x${raw}`];
+}
+
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   solidity: {
@@ -27,10 +33,17 @@ module.exports = {
     robinhood: {
       url: process.env.ROBINHOOD_RPC_URL || "https://rpc.mainnet.chain.robinhood.com",
       chainId: 4663,
+      accounts: deployerAccounts(),
     },
     robinhoodTestnet: {
       url: process.env.ROBINHOOD_TESTNET_RPC_URL || "https://rpc.testnet.chain.robinhood.com",
       chainId: 46630,
+      accounts: deployerAccounts(),
+    },
+    arcTestnet: {
+      url: process.env.ARC_TESTNET_RPC_URL || "https://rpc.testnet.arc.io",
+      chainId: 5042002,
+      accounts: deployerAccounts(),
     },
   },
 };
