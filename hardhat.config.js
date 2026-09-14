@@ -1,7 +1,12 @@
 require("@nomicfoundation/hardhat-toolbox");
 
 function deployerAccounts() {
-  const raw = (process.env.PRIVATE_KEY || process.env.HEIR_ETH_CCT_DEPLOYER || "").trim();
+  const raw = (
+    process.env.PRIVATE_KEY ||
+    process.env.EVM_DEPLOYER_KEY ||
+    process.env.HEIR_ETH_CCT_DEPLOYER ||
+    ""
+  ).trim();
   if (!raw) return [];
   return [raw.startsWith("0x") ? raw : `0x${raw}`];
 }

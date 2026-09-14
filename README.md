@@ -97,6 +97,14 @@ npm run lab:gas      # 24kb sizes + create estimates
 
 Do not point `scripts/deploy.js` at 4663 until production cash is real and claim has been rehearsed on 46630.
 
+Mintable practice USDG/WETH on 46630:
+
+```bash
+npx hardhat run scripts/deploy-mock-tokens.js --network robinhoodTestnet
+```
+
+Receipt: `office-mocks-46630.json`. Official testnet USDG and the Uniswap WETH pair are unchanged.
+
 ### Networks
 
 | Name | Chain ID | Config key |

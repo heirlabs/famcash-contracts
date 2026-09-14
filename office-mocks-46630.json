@@ -1,0 +1,59 @@
+{
+  "chainId": 46630,
+  "network": "robinhoodTestnet",
+  "rpcUrl": "https://rpc.testnet.chain.robinhood.com",
+  "deployer": "0x751ff033914C2B0C89541dA1760406577E41Ef83",
+  "usdg": {
+    "address": "0x32E434a8E9a5943dEa8D84C858ae7316B6456dD7",
+    "symbol": "USDG",
+    "name": "Mock USDG",
+    "decimals": 6,
+    "tx": "0x3dae2bbdfd1588c76d768fcd10c6f36b6dd7c54abd29852cb2520bf52043d305"
+  },
+  "weth": {
+    "address": "0x44447336E4285c261BB0859Bc9e167842aA25aAC",
+    "symbol": "WETH",
+    "name": "Mock WETH",
+    "decimals": 18,
+    "tx": "0xc705aed22ffc8419bf7af0f55f656e0d5d1ba58d1aed3505f73087132c268654"
+  },
+  "officialUsdg": "0x7E955252E15c84f5768B83c41a71F9eba181802F",
+  "uniswapWeth": "0x7943e237c7F95DA44E0301572D358911207852Fa",
+  "mints": [
+    {
+      "to": "0x751ff033914c2b0c89541da1760406577e41ef83",
+      "usdg": "1000000000000",
+      "weth": "100000000000000000000",
+      "usdgTx": "0x8119f9941ca060d3efbf1a1489aef22afb86bbb92a8ddd9a77a506a9b44744b2",
+      "wethTx": "0x4465d2e79af9df486dd227b2de4706e9338554840d97911c30048819f874b3de"
+    },
+    {
+      "to": "0x96706eb471f8759a9a1442f358d3b3b4a02f868b",
+      "usdg": "1000000000000",
+      "weth": "100000000000000000000",
+      "usdgTx": "0x6551b4b1f1d39644a382b5f723738c1ac4dfc8898c10759a09b833f8f78e317b",
+      "wethTx": "0x3d9e74ac0523be65537dc963283c317c19b7ec036363db2a00b2687ce57464ae"
+    },
+    {
+      "to": "0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266",
+      "usdg": "1000000000000",
+      "weth": "100000000000000000000",
+      "usdgTx": "0x063c6a5286d67a03bdd9b8e5a0cf1b94e4d160b752597f2cd86f3c833d77e695",
+      "wethTx": "0x53466ec65f25a2a4172ee14fce655a93d66015bd712454330f82e055e4c52549"
+    },
+    {
+      "to": "0x70997970c51812dc3a010c7d01b50e0d17dc79c8",
+      "usdg": "1000000000000",
+      "weth": "100000000000000000000",
+      "usdgTx": "0xa37811a8dd6fb3dda8fc52bc6a0f32712f18a522dc1f5e42f56cbbb03d3493cf",
+      "wethTx": "0x88ad1553156cde917ba57f07231b3716a5d6a41038877886d2b25f1dcc1545a9"
+    },
+    {
+      "to": "0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc",
+      "usdg": "1000000000000",
+      "weth": "100000000000000000000",
+      "usdgTx": "0xbeb816514184d29335f862cdb0d4f193a0526576260464ba675d1b54c74dea03",
+      "wethTx": "0xc0b4de33ceb27e5991b1d1d5b175900f865ea9d099e4f9b8185e98213e37fb8d"
+    }
+  ]
+}
