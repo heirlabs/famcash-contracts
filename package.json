@@ -24,6 +24,8 @@
     "lab:books": "hardhat run scripts/lab-books-dryrun.js --network localhost",
     "deploy": "hardhat run scripts/deploy.js",
     "deploy:published": "hardhat run scripts/deploy-published.js",
+    "deploy:uniswap-v2": "hardhat run scripts/deploy-uniswap-v2.js",
+    "seed:uniswap-lp": "hardhat run scripts/seed-uniswap-lp.js",
     "walk:published": "hardhat run scripts/walk-published.js",
     "clean": "hardhat clean"
   },
@@ -38,6 +40,8 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@openzeppelin/contracts": "5.4.0",
+    "@uniswap/v2-core": "^1.0.1",
+    "@uniswap/v2-periphery": "^1.1.0-beta.0",
     "hardhat": "^2.19.0"
   },
   "engines": {
