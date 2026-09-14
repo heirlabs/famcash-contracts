@@ -5,6 +5,7 @@ office-local.json
 office-published-*.json
 office-walk-*.json
 office-tape-*.json
+uniswap-v2-*.json
 .env
 .env.*
 !.env.example
